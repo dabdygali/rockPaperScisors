@@ -1,6 +1,23 @@
 let computerScore = 0;
 let humanScore = 0;
 
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+const resultsDiv = document.querySelector(".results");
+
+rockButton.addEventListener("click", function(){
+	playRound("rock", getComuterChoice());
+});
+
+paperButton.addEventListener("click", function(){
+	playRound("paper", getComuterChoice());
+});
+
+scissorsButton.addEventListener("click", function(){
+	playRound("scissors", getComuterChoice());
+});
+
 function getComuterChoice() {
     switch (Math.floor(Math.random() * 3)) {
         case 0:
@@ -24,26 +41,25 @@ function playRound(humanChoice, computerChoice) {
         humanChoice === "scissors" && computerChoice === "paper"
     )
     {
-        console.log("You win! " + humanChoice + " beats " + computerChoice);
+        resultsDiv.textContent = "You win! " + humanChoice + " beats " + computerChoice;
         humanScore++;
     } else if (humanChoice === computerChoice) {
-        console.log("It's a tie!");
+        resultsDiv.textContent = "It's a tie!";
     }
     else {
-        console.log("You lose! " + computerChoice + " beats " + humanChoice)
+        resultsDiv.textContent = "You lose! " + computerChoice + " beats " + humanChoice + ".";
         computerScore++;
     }
-}
+	resultsDiv.textContent += " Human: " + humanScore + ", Computer: " + computerScore + ".";
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        playRound(getHumanChoice(), getComuterChoice());
-        console.log({Player: humanScore, Computer: computerScore});
-    }
+	if (humanScore === 5) {
+		resultsDiv.textContent += " The Winner is Human!!!";
+		humanScore = 0;
+		computerScore = 0;
+	}
+	else if (computerScore === 5){
+		resultsDiv.textContent += " The Winner is Computer!!!";
+		humanScore = 0;
+		computerScore = 0;
+	}
 }
-
-function main() {
-    playGame();
-}
-
-main();
